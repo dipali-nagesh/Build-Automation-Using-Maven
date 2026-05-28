@@ -20,26 +20,18 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-        cache: maven
 
     - name: Build Maven Project
       run: mvn clean package
 
-    - name: Copy JAR to EC2
+    - name: Check Target Folder
+      run: ls -la target
+
+    - name: Copy WAR to EC2
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "target/*.jar"
+        source: "target/*.war"
         target: "/home/ubuntu/app"
-
-    - name: Deploy Application
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          pkill java || true
-          nohup java -jar /home/ubuntu/app/target/*.jar > app.log 2>&1 &
