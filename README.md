@@ -91,7 +91,7 @@ Example workflow step:
   
 ▶️ How to Run Project
 Step 1: Clone Repository
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/dipali-nagesh/Build-Automation-Using-Maven.git
 Step 2: Move into Project Directory
 cd your-repository
 Step 3: Build Project
